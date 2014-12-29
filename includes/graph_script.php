@@ -36,7 +36,9 @@ foreach($infos as $date => $donnee){
     $temp_graph_data .= " degree: '".$mesured."',";
     $temp_graph_data .= " target: '".$wanted."',";
     $temp_graph_data .= " chauffe: ".($donnee['current_state']['heat']?"HEAT_PLACEHOLDER":"null").",";
-    $temp_graph_data .= " external: ".$external.",";
+    $temp_graph_data .= " external: '".$external."',";
+    $temp_graph_data .= " auto_away: ".($donnee['current_state']['auto_away']?"HEAT_PLACEHOLDER":"null").",";
+    $temp_graph_data .= " manual_away: ".(!$donnee['current_state']['auto_away']&&$donnee['current_state']['manual_away']?"HEAT_PLACEHOLDER":"null").",";
     $temp_graph_data .= " },";
 
     //construction de l'affichage humidity
@@ -78,15 +80,15 @@ else
 	  // The name of the data record attribute that contains x-values.
 	  xkey: 'date',
 	  // A list of names of data record attributes that contain y-values.
-	  ykeys: ['degree','target','chauffe','external'],
+	  ykeys: ['degree','target','chauffe','external','auto_away','manual_away'],
 	  ymin: <?php echo $min_temp; ?>,
 	  ymax: <?php echo $max_temp; ?>,
 	  pointSize: 0,
 	  postUnits: ' C°',
 	  // Labels for the ykeys -- will be displayed when you hover over the
 	  // chart.
-	  labels: ['Intérieur','Voulu','Chauffage allumé','Extérieur'],
-	  lineColors: ["rgb(11, 98, 164)","rgb(122, 146, 163)",'red','green']
+	  labels: ['Intérieur','Voulu','Chauffage allumé','Extérieur', 'Auto absent', 'Manuel absent'],
+	  lineColors: ["rgb(11, 98, 164)","rgb(122, 146, 163)",'red','green','grey','black']
 	});
 	
 	new Morris.Line({

@@ -42,7 +42,10 @@ if($period=='complet'){
 	$infos = $input;
 }
 elseif($period=='semaine'){
-	$infos = getInfosSinceDate($input,mktime(0,0,0,date("n"),-7));
+	$infos = getInfosSinceDate($input,mktime(0,0,0,date("n"),date("j")-7));
+}
+elseif($period=='24h'){
+	$infos = getInfosSinceDate( $input, mktime(date("h")-24,0,0,date("n"),date("j")) );
 }
 else{
 	$infos = getInfosSinceDate($input,mktime(0,0,0,date("n"),date("j")));
@@ -119,7 +122,8 @@ if(!$histo){
 								echo '<li class="active" ><a href="#">Historique</a></li>';
 							}
 							else{ ?>
-						<li <? if($period==""){ echo 'class="active"'; } ?>><a href="/">Depuis 00h</a></li>
+						<li <? if($period==""){ echo 'class="active"'; } ?>><a href="/">Aujourd'hui</a></li>
+						<li <? if($period=="24h"){ echo 'class="active"'; } ?>><a href="/?period=24h">24 dernières heures</a></li>
 						<li <? if($period=="semaine"){ echo 'class="active"'; } ?>><a href="/?period=semaine">7 derniers jours</a></li>
 						<li <? if($period=="complet"){ echo 'class="active"'; } ?>><a href="/?period=complet">Mensuel</a></li>
 						<?php } ?>
